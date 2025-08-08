@@ -1,17 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
-import Audio from './components/Audio';
-import ImageAnalysis from './components/ImageAnalysis';
-import Summarizer from './components/Summarizer';
+import React, { useContext, useState } from "react";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
+import Audio from "./components/Audio";
+import ImageAnalysis from "./components/ImageAnalysis";
+import Summarizer from "./components/Summarizer";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
-function App() {
+function AppContent() {
+  const { user, logout } = useContext(AuthContext);
+  const [showRegister, setShowRegister] = useState(false);
+
+  if (!user) {
+    return (
+      <div>
+        {showRegister ? <Register /> : <Login setShowRegister = {setShowRegister}/>}
+        <button onClick={() => setShowRegister(!showRegister)}>
+          {showRegister ? "Go to Login" : "Go to Register"}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
-      <Audio/>
-      <ImageAnalysis/>
-      <Summarizer/>
+      <h2>Welcome, {user.username}</h2>
+      <button onClick={logout}>Logout</button>
+      <Audio />
+      <ImageAnalysis />
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}
