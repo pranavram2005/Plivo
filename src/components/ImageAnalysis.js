@@ -11,7 +11,7 @@ export default function ImageAnalysis() {
   const fileInputRef = useRef(null);
 
   // ⚠️ Replace with your real Hugging Face token
-  const HF_API_KEY = "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";
+  const HF_API_KEY = process.env.HF_API_KEY;
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
