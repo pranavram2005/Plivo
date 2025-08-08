@@ -17,6 +17,7 @@ function AppContent() {
         <button onClick={() => setShowRegister(!showRegister)}>
           {showRegister ? "Go to Login" : "Go to Register"}
         </button>
+        
       </div>
     );
   }
